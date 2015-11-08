@@ -30,8 +30,8 @@
 		this._posMonths();
 		this._posArticles();
 		
-		this._checkGapBetweenArticles();
-		
+		//this._checkGapBetweenArticles();
+		//this._checkGapBetweenArticles();
 		
 		/*if{
 		
@@ -94,6 +94,7 @@
 		
 		this.$element.find('.timeline-month').each(function( current_month ){
 			var month_left = self.current_width + self.gapMonth;
+			if(current_month != 0 && !(current_month % 11)) month_left += self.gapMonth;
 			
 			$(this).css('left', month_left + 'px');
 			
@@ -120,12 +121,18 @@
 	}
 	
 	// Check gap between Articles
-	TimeLine.prototype._checkGapBetweenArticles = function(){
+	//TimeLine.prototype._checkGapBetweenArticles = function(){
 		var self = this;
 		
 		// evntl. sollten wir das aber auch einfach dann in einem Tooltip anzeigen lassen
 	}
 	
+	
+	//TimeLine.prototype._checkGapBetweenArticles = function(){
+		var self = this;
+		
+		// evntl. sollten wir das aber auch einfach dann in einem Tooltip anzeigen lassen
+	}
 	
 	// Add TimeLine to jQuery
 	$.fn.timeline = function(options){
