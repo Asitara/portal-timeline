@@ -1,0 +1,145 @@
+
+.timeline-wrap {
+	position: relative;
+	width: 100%;
+	height: 1px;
+	border: 1px solid #222;
+	background: #273D81;
+}
+
+.timeline-years {
+	position: absolute;
+	left: 0;
+	top: -30px;
+	font: bold 10px/18px 'Lucida Grande', helvetica, tahoma, sans-serif;
+	color: #222;
+}
+.timeline-year {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100px;
+	margin-left: -50px;
+	text-align: center;
+	white-space: nowrap;
+}
+.timeline-year:before {
+	display: block;
+	content: "";
+	position: absolute;
+	left: 50px;
+	top: 20px;
+	width: 1px;
+	height: 9px;
+	background: #222;
+}
+
+.timeline-months {
+	position: absolute;
+	left: 0;
+	top: -30px;
+	font: bold 10px/18px 'Lucida Grande', helvetica, tahoma, sans-serif;
+	color: #AAA;
+}
+.timeline-month {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100px;
+	margin-left: -50px;
+	text-align: center;
+	white-space: nowrap;
+}
+.timeline-month:before {
+	display: block;
+	content: "";
+	position: absolute;
+	left: 50px;
+	top: 25px;
+	width: 1px;
+	height: 4px;
+	background: #AAA;
+}
+
+
+
+
+
+
+
+
+.timeline-article {
+	position: absolute;
+	left: 0; 
+	top: 0;
+}
+.timeline-article-node {
+	position: absolute; 
+	top: -7px; 
+	left: 0px;
+	border-radius: 8px; 
+	width: 11px; 
+	height: 11px; 
+	background: #ccc; 
+	border: 2px solid #222; 
+	cursor: pointer;
+	-webkit-transition: width 0.05s ease-out, height 0.05s ease-out, margin 0.05s ease-out, background 0.05s ease-out;
+	-moz-transition: width 0.05s ease-out, height 0.05s ease-out, margin 0.05s ease-out, background 0.05s ease-out;
+	transition: width 0.05s ease-out, height 0.05s ease-out, margin 0.05s ease-out, background 0.05s ease-out;
+}
+.timeline-article-content {
+	display: none;
+	margin-left: -20px;
+	padding: 12px;
+	position: absolute;
+	left: 0px;
+	top: 30px;
+//overflow: visible;
+	background: #222;
+	font: 12px/18px 'Lucida Grande', helvetica, tahoma, sans-serif;
+	color: #EFEFEF;
+}
+/*.timeline-article-content::before {
+	display: block;
+	content: '';
+	width: 0px;
+	height: 0px;
+	position: absolute;
+	top: -17px;
+	left: 9px;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-bottom: 6px solid #222;
+}*/
+.timeline-article-title {
+	white-space: nowrap;
+	font-weight: bold;
+}
+.timeline-article-title span {
+	color: #00ACFF;
+	display: inline-block;
+	margin-right: 10px;
+	font-size: 10px;
+	font-weight: normal;
+}
+.timeline-article-text {
+	margin: 20px 0px 10px;
+}
+.timeline-article-thumbnail {
+    float: left;
+    margin: 0px 10px 10px 0px;
+    width: 100px;
+    height: 100px;
+}
+.timeline-article-link {
+	display: block;
+	text-align: right;
+}
+
+
+
+
+
+
+
+
