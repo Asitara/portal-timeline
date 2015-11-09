@@ -66,14 +66,6 @@ class timeline_portal extends portal_generic {
 		$intInterval	= (int)$this->config('interval');
 		$intStartYear	= $this->time->date('Y') - ($intInterval - 1);
 		$arrMonthsNames	= $this->user->lang('time_monthnames');
-		$arrArticles	= array();
-		
-		//fetch all articles
-		foreach($arrCategories as $intCategoryID){
-			$arrArticles = array_merge($arrArticles, $this->pdh->get('article_categories', 'published_id_list', array($intCategoryID, $this->user->id)));
-		}
-		$arrArticles = array_unique($arrArticles);
-		$arrSortedArticles = $this->pdh->sort($arrArticles, 'articles', 'date', 'desc');
 		
 		//generate years & months
 		for($intYear = 0; $intYear <= $intInterval; $intYear++){
@@ -94,20 +86,75 @@ class timeline_portal extends portal_generic {
 			}
 		}
 		
-		#d($this->time->fromformat('31-12-2016', 'd-m-Y'));
-		#d($this->time->mktime(0, 0, 0, 12, 31, 2016));
+		
+		
+		
+		//fetch all articles
+		$arrArticles = $arrSortedArticles = array();
+		foreach($arrCategories as $intCategoryID){
+			$arrArticles = array_merge($arrArticles, $this->pdh->get('article_categories', 'published_id_list', array($intCategoryID, $this->user->id)));
+		}
+		
+		$arrArticles = array_unique($arrArticles);
+		$arrArticles = $this->pdh->sort($arrArticles, 'articles', 'date', 'desc');
+		
+		//merge article_ids with same Dates
+		foreach($arrArticles as $intArticleID){
+			$intArticleDate = $this->pdh->get('articles', 'date', array($intArticleID));
+			$intArticleDate = $this->time->date('Ymd', $intArticleDate);
+			
+			if(isset($arrSortedArticles[$intArticleDate])){
+				$arrSortedArticles[$intArticleDate][] = $intArticleID;
+			}else{
+				$arrSortedArticles[$intArticleDate] = array($intArticleID);
+			}
+		}
 		
 		//generate articles
-		/*for($a = 1; $a < 13; $a++){
+		foreach($arrSortedArticles as $arrArticleIDs){
+			$intDate = $this->pdh->get('articles', 'date', array($arrArticleIDs[0]));
 			$this->tpl->assign_block_vars('pm_tl_articles', array(
-				'NAME'		=> $a,
-				'TIMESTAMP'	=> $this->time->mktime(0, 0, 0, $a, 5, 2015),
-				#'DATE'		=> $this->time->date('Y-m-d', $intArticleDate),
-				'DATE'		=> '2015-0'.$a.'-01',
+				'TIMESTAMP'	=> $intDate,
 			));
-		}*/
+			
+			foreach($arrArticleIDs as $intArticleID){
+				$arrArticle				= array();
+				$arrArticle['date']		= $this->pdh->get('articles', 'date', array($intArticleID));
+				$arrArticle['image']	= $this->pdh->get('articles', 'previewimage', array($intArticleID));
+				$arrArticle['text']		= $this->pdh->get('articles', 'text', array($intArticleID));
+				$arrArticle['title']	= $this->pdh->get('articles', 'title', array($intArticleID));
+				
+				$intWordcount	= 200;
+				$blnImage		= false;
+				
+				if( ($arrArticle['date'] + ($intInterval*60*60*24*365)) < $this->time->time ) continue;
+				
+				if(strlen($arrArticle['image'])){
+					$blnImage = true;
+					$arrArticle['image'] = register('pfh')->FileLink($strPreviewImage, 'files', 'absolute');
+				}else{
+					$arrArticle['image'] = '';
+				}
+				
+				$arrArticle['text'] = $this->bbcode->remove_embeddedMedia($this->bbcode->remove_shorttags($arrArticle['text']));
+				$arrArticle['text'] = strip_tags(xhtml_entity_decode($arrArticle['text']));
+				$arrArticle['text'] = truncate($arrArticle['text'], $intWordcount, '...', false, true);
+				
+				$this->tpl->assign_block_vars('pm_tl_articles.article', array(
+					'ID'		=> $intArticleID,
+					#'TIMESTAMP'	=> $arrArticle['date'],
+					'DATE'		=> $this->time->date('d.m.Y', $arrArticle['date']),
+					'TITLE'		=> $arrArticle['title'],
+					'IMAGE'		=> $blnImage,
+					'IMAGE_URL'	=> $arrArticle['image'],
+					'TEXT'		=> $arrArticle['text'],
+					'URL'		=> $this->controller_path.$this->pdh->get('articles', 'path', array($intArticleID)),
+				));
+			}
+		}
 		
-		foreach($arrSortedArticles as $intArticleID){
+		
+		/*foreach($arrSortedArticles as $intArticleID){
 			//check Date
 			$intArticleDate = $this->pdh->get('articles', 'date', array($intArticleID));
 			if( ($intArticleDate+($intInterval*60*60*24*365)) < $this->time->time ) continue;
@@ -134,7 +181,7 @@ class timeline_portal extends portal_generic {
 				'TEXT'		=> $strText,
 				'URL'		=> $this->controller_path.$this->pdh->get('articles', 'path', array($intArticleID)),
 			));
-		}
+		}*/
 		
 	
 

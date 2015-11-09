@@ -2,10 +2,7 @@
 
 ;(function($){
 	var pluginName = 'TimeLine'
-	var defaults = {
-		//startYear: (new Date()).getFullYear() -1,	// Start with one less year by default
-		//groupEventWithinPx : 6,					// Will show common tooltip for events within this range of px
-	}
+	var defaults = {}
 	
 	// Constructor
 	function TimeLine(element, options){
@@ -30,48 +27,7 @@
 		this._posMonths();
 		this._posArticles();
 		
-		//this._checkGapBetweenArticles();
-		//this._checkGapBetweenArticles();
-		
-		/*if{
-		
-		this.gapDay = gapMonth / 31;
-		
-		Artikel Datum erhalten,
-			( articleYear - startYear ) * gapYear		; IF articleYear == startYear THEN 0px  --- vllt auch .diff anstelle minus
-			  articleMonth * gapMonth					;
-			  articleDay * gapDay						;
-			  
-		alles zusammen sollte die korrekte Weite für diesen einen Artikel ergeben
-		-------------------------------
-		um diese nicht punkt auf punkt artikel zuhaben sollte man die artikel wärend der berechnung
-		in ein array speichern mit den leftWidth Werten und der artikel id
-		dann iteriere über diesen array für jeden artikel einzelnd und prüfe ob .diff(array_artikel_weite, artikel_weite)
-		xx px überschreitet oder nicht, ggf rechne xx px vom artikel via id ab
-		
-		*/
-		
-		/*
-		// Event
-		var self = this;
-		this.articles.each(function(){
-			var date = new Date( $(this).data('article-date') );
-			
-			
-		var n = date.getDate();
-		var yn = date.getFullYear() - _this.options.startYear;
-		var mn = date.getMonth();
-		var totalMonths = (yn * 12) + mn;
-		//var leftVal = Math.ceil(_this._offset_x + totalMonths * _this.options.gap + (_this.options.gap/31)*n - _this._eDotWidth/2);
-			
-			
-			
-			console.log(date);
-			
-			//--var date = new moment($(this).data('article-date'), 'YYYY-MM-DD');
-			//--$(this).css('left', self.getWidth(date) + 'px');
-		});
-		}*/
+		this._tooltipHandler();
 		
 		
 		console.log( this );// DEBUG
@@ -120,19 +76,45 @@
 		});
 	}
 	
-	// Check gap between Articles
-	//TimeLine.prototype._checkGapBetweenArticles = function(){
+	// Tooltip Event Handler
+	TimeLine.prototype._tooltipHandler = function(){
 		var self = this;
+		/*
+		$('.timeline-article').on('mouseover', function(){
+			if( self.$element.find('.timeline-article.timeline-selected').length == 0 ){
+				$(this).addClass('timeline-hover');
+			}
+		});
+		$('.timeline-article').on('mouseleave', function(){
+			if( self.$element.find('.timeline-article.timeline-selected').length == 0 ){
+				$(this).removeClass('timeline-hover');
+			}// here we should maybe a check, to delete hover if selected
+		});
+		*/
+		self.$element.find('.timeline-article').on('click', function(){
+			if( self.$element.find('.timeline-article.timeline-selected').length == 0 ){
+				$(this).addClass('timeline-selected');
+				
+			}else if( $(this).hasClass('timeline-selected') ){
+				$(this).removeClass('timeline-selected');
+				
+			}else{
+				self.$element.find('.timeline-article.timeline-selected').removeClass('timeline-selected');
+				$(this).addClass('timeline-selected');
+			}
+		});
 		
-		// evntl. sollten wir das aber auch einfach dann in einem Tooltip anzeigen lassen
+		$(document).on('click', function(event){
+			var timeline_any_selected	= (self.$element.find('.timeline-article.timeline-selected').length != 0)? true : false ;
+			var target_timeline_area	= (self.$element.find(event.target).length == 0)? true : false ;
+			
+			if( timeline_any_selected && target_timeline_area ){
+				self.$element.find('.timeline-article.timeline-selected').removeClass('timeline-selected')
+			}
+		});
 	}
 	
 	
-	//TimeLine.prototype._checkGapBetweenArticles = function(){
-		var self = this;
-		
-		// evntl. sollten wir das aber auch einfach dann in einem Tooltip anzeigen lassen
-	}
 	
 	// Add TimeLine to jQuery
 	$.fn.timeline = function(options){
@@ -143,7 +125,6 @@
         });
 	};
 }(jQuery, window));
-
 
 
 
