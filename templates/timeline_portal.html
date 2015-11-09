@@ -19,10 +19,10 @@
 				<div class="timeline-article-tooltip">
 					<!-- BEGIN article -->
 					<div class="timeline-article-title" data-article-id="{pm_tl_articles.article.ID}"><span>{pm_tl_articles.article.DATE}</span>{pm_tl_articles.article.TITLE}</div>
-					<div class="timeline-article-content" data-article-id="{pm_tl_articles.article.ID}">
+					<div class="timeline-article-content" data-article-id="{pm_tl_articles.article.ID}"<!-- IF pm_tl_articles.article.IMAGE --> style="min-height: 75px;"<!-- ENDIF -->>
 						<div class="timeline-event-text">
 							<!-- IF pm_tl_articles.article.IMAGE -->
-							<img class="timeline-article-thumbnail" scr="pm_tl_articles.article.IMAGE_URL" />
+							<img class="timeline-article-thumbnail" src="{pm_tl_articles.article.IMAGE_URL}" alt=""></img>
 							<!-- ENDIF -->
 							{pm_tl_articles.article.TEXT}
 						</div>

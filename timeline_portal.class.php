@@ -128,7 +128,7 @@ class timeline_portal extends portal_generic {
 				
 				if(strlen($arrArticle['image'])){
 					$blnImage = true;
-					$arrArticle['image'] = register('pfh')->FileLink($strPreviewImage, 'files', 'absolute');
+					$arrArticle['image'] = register('pfh')->FileLink($arrArticle['image'], 'files', 'absolute');
 				}else{
 					$arrArticle['image'] = '';
 				}

@@ -115,7 +115,6 @@
 	white-space: nowrap;
 }
 .timeline-article-title:hover {
-	cursor: pointer;
 	background: radial-gradient(
 		65% 35%,
 		rgba(0, 172, 255, 0.7) 0%,

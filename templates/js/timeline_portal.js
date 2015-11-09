@@ -83,7 +83,10 @@
 			var dateMonth	= date.format('M');
 			var dateDay		= date.format('D');
 			
-			var article_left  = (dateYear < self.startYear)? (self.startYear - dateYear) * self.gapYear : 0 ;
+			console.log( dateYear ); console.log( self.startYear );
+			console.log( (dateYear - self.startYear) * self.gapYear );
+			
+			var article_left  = (dateYear > self.startYear)? (dateYear - self.startYear) * self.gapYear : 0 ;
 				article_left += (dateMonth - 1) * self.gapMonth;
 				article_left += (dateDay - 1) * self.gapDay;
 			
