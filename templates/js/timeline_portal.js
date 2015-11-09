@@ -1,4 +1,22 @@
-
+/*	Project:	EQdkp-Plus
+ *	Package:	Timeline Portal Module
+ *	Link:		http://eqdkp-plus.eu
+ *
+ *	Copyright (C) 2006-2015 EQdkp-Plus Developer Team
+ *
+ *	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU Affero General Public License as published
+ *	by the Free Software Foundation, either version 3 of the License, or
+ *	(at your option) any later version.
+ *
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU Affero General Public License for more details.
+ *
+ *	You should have received a copy of the GNU Affero General Public License
+ *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 ;(function($){
 	var pluginName = 'TimeLine'
@@ -28,9 +46,6 @@
 		this._posArticles();
 		
 		this._tooltipHandler();
-		
-		
-		console.log( this );// DEBUG
 	}
 	
 	// Calc Position of Years
@@ -79,18 +94,7 @@
 	// Tooltip Event Handler
 	TimeLine.prototype._tooltipHandler = function(){
 		var self = this;
-		/*
-		$('.timeline-article').on('mouseover', function(){
-			if( self.$element.find('.timeline-article.timeline-selected').length == 0 ){
-				$(this).addClass('timeline-hover');
-			}
-		});
-		$('.timeline-article').on('mouseleave', function(){
-			if( self.$element.find('.timeline-article.timeline-selected').length == 0 ){
-				$(this).removeClass('timeline-hover');
-			}// here we should maybe a check, to delete hover if selected
-		});
-		*/
+		
 		self.$element.find('.timeline-article').on('click', function(){
 			if( self.$element.find('.timeline-article.timeline-selected').length == 0 ){
 				$(this).addClass('timeline-selected');
@@ -102,6 +106,18 @@
 				self.$element.find('.timeline-article.timeline-selected').removeClass('timeline-selected');
 				$(this).addClass('timeline-selected');
 			}
+		});
+		
+		self.$element.find('.timeline-article-title').on('mouseover', function(){
+			var article_id = $(this).data('article-id');
+			
+			self.$element.find('.timeline-article-content[data-article-id="'+article_id+'"]').addClass('timeline-hover');
+		});
+		self.$element.find('.timeline-article-title').on('mouseleave', function(){
+			self.$element.find('.timeline-article-content.timeline-hover').removeClass('timeline-hover');
+		});
+		self.$element.find('.timeline-article-content').on('mouseleave', function(){
+			self.$element.find('.timeline-article-content.timeline-hover').removeClass('timeline-hover');
 		});
 		
 		$(document).on('click', function(event){
@@ -125,134 +141,4 @@
         });
 	};
 }(jQuery, window));
-
-
-
-
-
-
-
-
-
-
-/***********************************************
- * THIS TIMELINE WORKS FINE BUT ARTICLE ARE REVERSED
- * 
- ***********************************************/
-
-/*
-;(function($){
-	var pluginName = 'TimeLine'
-	
-	// Constructor
-	function TimeLine(element, options){
-		this.$element	= $(element);
-		
-		this.init();
-	}
-	
-	// Initialize
-	TimeLine.prototype.init = function(){
-		// TimeLine width
-		this._width		= this.$element.find('.timeline-wrap').width();
-		
-		// Calculate StartTime, EndTime and elapsed time between the Years
-		this._dateStart	= new moment(this.$element.find('.timeline-year:first-child').data('date'), 'YYYY-MM-DD');
-		this._dateEnd	= new moment(this.$element.find('.timeline-year:last-child').data('date'), 'YYYY-MM-DD');
-		this._duration	= this._dateEnd.diff(this._dateStart);
-		
-		// Iterate Articles
-		var self = this;
-		
-		this._articles	= this.$element.find('.timeline-article');
-		this._articles.each(function(){
-			var date = new moment($(this).data('article-date'), 'YYYY-MM-DD');
-			
-			$(this).css('left', self.getWidth(date) + 'px');
-		});
-		
-		// Iterate Years
-		var self = this;
-		
-		this._years	= this.$element.find('.timeline-year');
-		this._years.each(function(){
-			var date = new moment($(this).data('date'), 'YYYY-MM-DD');
-			
-			$(this).css('left', self.getWidth(date) + 'px');
-		});
-		
-		
-		
-		console.log(      this     );
-	};
-	
-	TimeLine.prototype.getWidth = function(date){
-		var width = date.diff(this._dateStart) * this._width / this._duration;
-			width = Math.abs(parseInt(width));
-			//width = width + this.options.margeTop;
-		return width;
-	};
-
-	
-	
-	// Add TimeLine to jQuery
-	$.fn.timeline = function(options){
-		return this.each(function () {
-            if( !$.data(this, 'plugin_' + pluginName) ) {
-                $.data(this, 'plugin_' + pluginName, new TimeLine( this, options ));
-            }
-        });
-	};
-}(jQuery, window));
-*/
-
-
-
-/***********************************************
- * THIS TIMELINE WORKS FINE WITH YEARS AND MONTHS
- * 
- ***********************************************/
-
-
-/*
-$(document).ready(function(){
-	var wrap_width	= $('.timeline-wrap').width();
-	
-	//calc years & months positions
-	var years		= $('.timeline-year').length;
-	var year_width	= wrap_width / (years - 1);
-	var month_width = year_width / 12;
-	
-	$('.timeline-year').each(function(year_count){
-		this_year_width = year_count * year_width;
-		
-		$(this).css('left', this_year_width + 'px');
-		
-		$('.timeline-month[data-year="'+year_count+'"]').each(function(month_count){
-			this_month_width = month_count * month_width;
-			this_month_width += this_year_width - year_width;
-			
-			if( $(this).data('month') == 1 ){
-				$(this).remove();
-			}else{
-				$(this).css('left', this_month_width + 'px');
-			}
-		});
-	});
-	
-	//calc article positions
-	var wrap_start_time	= $('.timeline-year:first-child').data('timestamp');
-	var wrap_end_time	= $('.timeline-year:last-child').data('timestamp');
-	
-	
-	$('.timeline-article').each(function(article_count){
-		article_date				= $(this).data('article-date');
-		percentage_article_width	= (article_date - wrap_start_time) * 100 / (wrap_end_time - wrap_start_time);
-		this_article_width			= wrap_width * percentage_article_width / 100;
-		console.log(percentage_article_width);
-		$(this).css('left', this_article_width + 'px');
-	});
-	
-});
-*/
 

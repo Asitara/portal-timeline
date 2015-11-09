@@ -1,6 +1,6 @@
 <?php
 /*	Project:	EQdkp-Plus
- *	Package:	Tag cloud Portal Module
+ *	Package:	Timeline Portal Module
  *	Link:		http://eqdkp-plus.eu
  *
  *	Copyright (C) 2006-2015 EQdkp-Plus Developer Team
@@ -86,9 +86,6 @@ class timeline_portal extends portal_generic {
 			}
 		}
 		
-		
-		
-		
 		//fetch all articles
 		$arrArticles = $arrSortedArticles = array();
 		foreach($arrCategories as $intCategoryID){
@@ -142,7 +139,6 @@ class timeline_portal extends portal_generic {
 				
 				$this->tpl->assign_block_vars('pm_tl_articles.article', array(
 					'ID'		=> $intArticleID,
-					#'TIMESTAMP'	=> $arrArticle['date'],
 					'DATE'		=> $this->time->date('d.m.Y', $arrArticle['date']),
 					'TITLE'		=> $arrArticle['title'],
 					'IMAGE'		=> $blnImage,
@@ -153,110 +149,12 @@ class timeline_portal extends portal_generic {
 			}
 		}
 		
-		
-		/*foreach($arrSortedArticles as $intArticleID){
-			//check Date
-			$intArticleDate = $this->pdh->get('articles', 'date', array($intArticleID));
-			if( ($intArticleDate+($intInterval*60*60*24*365)) < $this->time->time ) continue;
-			
-			//check Preview Image
-			$strPreviewImage = $this->pdh->get('articles', 'previewimage', array($intArticleID));
-			if(strlen($strPreviewImage)){
-				$strImage = register('pfh')->FileLink($strPreviewImage, 'files', 'absolute');
-			} else $strImage = "";
-			
-			//parse Informations
-			$intWordcount = 200;
-			$strText = $this->pdh->get('articles', 'text', array($intArticleID));
-			$strText = $this->bbcode->remove_embeddedMedia($this->bbcode->remove_shorttags($strText));
-			$strText = strip_tags(xhtml_entity_decode($strText));
-			$strText = truncate($strText, $intWordcount, '...', false, true);
-			
-			$this->tpl->assign_block_vars('pm_tl_articles', array(
-				'ID'		=> $intArticleID,
-				'TIMESTAMP'	=> $intArticleDate,
-				'DATE'		=> $this->time->date('d.m.Y', $this->pdh->get('articles', 'date', array($intArticleID))),
-				'TITLE'		=> $this->pdh->get('articles', 'title', array($intArticleID)),
-				'IMAGE'		=> $strImage,
-				'TEXT'		=> $strText,
-				'URL'		=> $this->controller_path.$this->pdh->get('articles', 'path', array($intArticleID)),
-			));
-		}*/
-		
-	
-
-		
-		
-		
 		$this->tpl->add_js("
 			$('#timeline-0').timeline({  });
 		", 'docready');
 		
 		
-		
-		
-		
-		
-		
 		return 'Error: Template file is empty.';
-		
-		//--------------------------------------------------------------------------------------------------------------------------
-		
-		$this->tpl->js_file($this->server_path.'portal/timeline/includes/timelinexml.min.js');
-		$this->tpl->css_file($this->server_path.'portal/timeline/includes/timelinexml.modern.css');
-
-		$arrCategories = $this->config('categories');
-		if(empty($arrCategories)) $arrCategories = array();
-		$arrArticles = array();
-		foreach($arrCategories as $intCategoryID){
-			$arrArticles = array_merge($arrArticles, $this->pdh->get('article_categories', 'published_id_list', array($intCategoryID, $this->user->id)));
-		}
-		$arrArticles = array_unique($arrArticles);
-		$arrSortedArticles = $this->pdh->sort($arrArticles, 'articles', 'date', 'desc');
-		
-		$this->tpl->add_js('
-			$("#my-timeline_'.$this->id.'").timelinexml({ src : $(".timeline-html-wrap_'.$this->id.'") });
-		', 'docready');
-		
-		$strOut = '<div id="my-timeline_'.$this->id.'" style="margin-top: 40px; margin-left: 10px; margin-right: 10px; margin-bottom: 10px;"></div>';
-
-		$intInterval = (int)$this->config('interval');
-		
-		foreach($arrSortedArticles as $intArticleID){
-			//Check Date
-			if ($intInterval){
-				$articleDate = $this->pdh->get('articles', 'date', array($intArticleID));
-				if (($articleDate+($intInterval*60*60*24*365)) < $this->time->time ) continue;
-			}
-			
-			
-			$strPreviewImage = $this->pdh->get('articles', 'previewimage', array($intArticleID));
-			if (strlen($strPreviewImage)){
-				$strImage = register('pfh')->FileLink($strPreviewImage, 'files', 'absolute');
-			} else $strImage = "";
-			
-			$intWordcount = 200;
-			$strText = $this->pdh->get('articles', 'text', array($intArticleID));
-			$strText = $this->bbcode->remove_embeddedMedia($this->bbcode->remove_shorttags($strText));
-			$strText = strip_tags(xhtml_entity_decode($strText));
-			$strText = truncate($strText, $intWordcount, '...', false, true);
-
-			
-			$strOut .= '
-				<div class="timeline-html-wrap_'.$this->id.'" style="display:none">
-				    <div class="timeline-event">
-				    	<div class="timeline-date">'.$this->time->date('d.m.Y', $this->pdh->get('articles', 'date', array($intArticleID))).'</div>
-				    	<div class="timeline-title">'.$this->pdh->get('articles', 'title', array($intArticleID)).'</div>
-				    	<div class="timeline-thumb">'.$strImage.'</div>
-				    	<div class="timeline-content">'.$strText.'</div>
-				    	<div class="timeline-link"><a href="'.$this->controller_path.$this->pdh->get('articles', 'path', array($intArticleID)).'">'.$this->user->lang('readmore_button').'</a></div>
-					</div>
-				</div>';
-
-		}
-		
-		return $strOut;
 	}
-
 }
 ?>

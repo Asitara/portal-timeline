@@ -19,37 +19,19 @@
 				<div class="timeline-article-tooltip">
 					<!-- BEGIN article -->
 					<div class="timeline-article-title" data-article-id="{pm_tl_articles.article.ID}"><span>{pm_tl_articles.article.DATE}</span>{pm_tl_articles.article.TITLE}</div>
+					<div class="timeline-article-content" data-article-id="{pm_tl_articles.article.ID}">
+						<div class="timeline-event-text">
+							<!-- IF pm_tl_articles.article.IMAGE -->
+							<img class="timeline-article-thumbnail" scr="pm_tl_articles.article.IMAGE_URL" />
+							<!-- ENDIF -->
+							{pm_tl_articles.article.TEXT}
+						</div>
+						<div class="timeline-article-link"><a href="{pm_tl_articles.article.URL}">{L_readmore_button}</a></div>
+					</div>
 					<!-- END article -->
 				</div>
-				<!-- BEGIN article -->
-				<div class="timeline-article-content" data-article-id="{pm_tl_articles.article.ID}">
-					<div class="timeline-article-title"><span>{pm_tl_articles.article.DATE}</span>{pm_tl_articles.article.TITLE}</div>
-					<div class="timeline-event-text">
-						<!-- IF pm_tl_articles.article.IMAGE -->
-						<img class="timeline-article-thumbnail" scr="pm_tl_articles.article.IMAGE_URL" />
-						<!-- ENDIF -->
-						{pm_tl_articles.article.TEXT}
-					</div>
-					<div class="timeline-event-link"><a href="{pm_tl_articles.article.URL}">{L_readmore_button}</a></div>
-				</div>
-				<!-- END article -->
 			</div>
 			<!-- END pm_tl_articles -->
 		</div>
 	</div>
 </div>
-
-
-			<!--
-			<div class="timeline-article" data-article-timestamp="{pm_tl_articles.TIMESTAMP}" style="left: 0px;">
-				<div class="timeline-article-node"></div>
-				<div style="display: none;" class="timeline-article-content">
-					<div class="timeline-event-title"><span>{pm_tl_articles.DATE}</span>{pm_tl_articles.TITLE}</div>
-					<div class="timeline-article-content-extend" style="display: none;">
-						<div class="timeline-event-text">{pm_tl_articles.TEXT}</div>
-						<div class="timeline-event-link"><a href="{pm_tl_articles.URL}">{L_readmore_button}</a></div>
-					</div>
-				</div>
-			</div>
-			-->
-			
