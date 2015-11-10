@@ -25,21 +25,21 @@ if ( !defined('EQDKP_INC') ){
 
 class timeline_portal extends portal_generic {
 
-	protected static $path		= 'timeline';
-	protected static $data		= array(
+	protected static $path	= 'timeline';
+	protected static $data	= array(
 		'name'			=> 'timeline',
 		'version'		=> '0.1.0',
 		'author'		=> 'Asitara',
 		'contact'		=> EQDKP_PROJECT_URL,
 		'description'	=> 'Shows a timeline of your articles',
 		'lang_prefix'	=> 'timeline_',
-		'multiple'		=> true,
+		'multiple'		=> false,
 		'icon'			=> 'fa-arrows-h',
 	);
 
-	protected static $multiple = true;
-	protected static $apiLevel = 20;
-	public $template_file = 'timeline_portal.html';
+	protected static $multiple	= false;
+	protected static $apiLevel	= 20;
+	public $template_file		= 'timeline_portal.html';
 
 
 	public function get_settings($state){
@@ -149,10 +149,10 @@ class timeline_portal extends portal_generic {
 			}
 		}
 		
-		$this->tpl->add_js("
-			$('#timeline-0').timeline({  });
-		", 'docready');
 		
+		$this->tpl->add_js("
+			$('#pm_timeline').timeline({  });
+		", 'docready');
 		
 		return 'Error: Template file is empty.';
 	}

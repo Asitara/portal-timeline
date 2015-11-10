@@ -1,4 +1,4 @@
-
+#pm_timeline { margin: 40px 10px 10px; }
 .timeline-wrap {
 	position: relative;
 	width: 100%;
@@ -106,6 +106,7 @@
 }
 .timeline-article-content {
 	display: none;
+	min-height: 90px;
 	margin-top: -6px;
 	padding: 0 12px 0 26px;
 }
