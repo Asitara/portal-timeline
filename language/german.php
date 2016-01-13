@@ -1,9 +1,9 @@
 <?php
 /*	Project:	EQdkp-Plus
- *	Package:	Tag cloud Portal Module
+ *	Package:	Timeline Portal Module
  *	Link:		http://eqdkp-plus.eu
  *
- *	Copyright (C) 2006-2015 EQdkp-Plus Developer Team
+ *	Copyright (C) 2006-2016 EQdkp-Plus Developer Team
  *
  *	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU Affero General Public License as published
@@ -24,12 +24,12 @@ if ( !defined('EQDKP_INC') ){
 }
 
 $lang = array(
-	'timeline'					=> 'Zeitleiste',
-	'timeline_name'				=> 'Artikel-Zeitleiste',
-	'timeline_desc'				=> 'Zeigt eine Zeitliste für die geschriebenen Artikel an',
-	'timeline_f_categories'		=> 'Artikelkategorien',
-	'timeline_f_help_categories'=> 'Aus den ausgewählten Kategorien werden die geschriebenen Artikel in der Zeitleiste angezeigt',
-	'timeline_f_interval'		=> 'Intervall (in Jahren)',
+	'timeline'						=> 'Zeitleiste',
+	'timeline_name'					=> 'Artikel-Zeitleiste',
+	'timeline_desc'					=> 'Zeigt eine Zeitliste für die geschriebenen Artikel an',
+	'timeline_f_categories'			=> 'Artikelkategorien',
+	'timeline_f_help_categories'	=> 'Aus den ausgewählten Kategorien werden die geschriebenen Artikel in der Zeitleiste angezeigt',
+	'timeline_f_interval'			=> 'Intervall (in Jahren)',
 	'timeline_f_interval_categories'=> 'Zeigt die Artikel der letzten x Jahre in der Zeitleiste an. Trage 0 ein, um alle Artikel anzuzeigen.',
 		
 );
