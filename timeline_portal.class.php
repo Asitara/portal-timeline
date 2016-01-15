@@ -37,7 +37,6 @@ class timeline_portal extends portal_generic {
 		'icon'			=> 'fa-arrows-h',
 	);
 
-	protected static $multiple	= false;
 	protected static $apiLevel	= 20;
 	public $template_file		= 'timeline_portal.html';
 
@@ -151,7 +150,7 @@ class timeline_portal extends portal_generic {
 		
 		
 		$this->tpl->add_js("
-			$('#pm_timeline').timeline({  });
+			$('#pm_timeline').timeline();
 		", 'docready');
 		
 		return 'Error: Template file is empty.';
