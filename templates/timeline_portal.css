@@ -134,6 +134,8 @@
 	padding: 12px;
 	font-weight: bold;
 	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .timeline-article-title:hover {
 	background: radial-gradient(

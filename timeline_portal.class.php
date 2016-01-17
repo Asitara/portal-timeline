@@ -19,7 +19,7 @@
  *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ( !defined('EQDKP_INC') ){
+if( !defined('EQDKP_INC') ){
 	header('HTTP/1.0 404 Not Found');exit;
 }
 
@@ -97,6 +97,8 @@ class timeline_portal extends portal_generic {
 		//merge article_ids with same Dates
 		foreach($arrArticles as $intArticleID){
 			$intArticleDate = $this->pdh->get('articles', 'date', array($intArticleID));
+			
+			if($this->time->date('Y', $intArticleDate) < $intStartYear) continue;
 			$intArticleDate = $this->time->date('Ymd', $intArticleDate);
 			
 			if(isset($arrSortedArticles[$intArticleDate])){
