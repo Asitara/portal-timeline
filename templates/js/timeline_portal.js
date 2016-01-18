@@ -95,37 +95,22 @@
 	TimeLine.prototype._tooltipHandler = function(){
 		var self = this;
 		
-		self.$element.find('.timeline-article').on('click', function(){
-			if( self.$element.find('.timeline-article.timeline-selected').length == 0 ){
-				$(this).addClass('timeline-selected');
-				
-			}else if( $(this).hasClass('timeline-selected') ){
-				$(this).removeClass('timeline-selected');
-				
+		var tooltipTimeout = null;
+		self.$element.find('.timeline-article').hover(function(){
+			if( self.$element.find('.timeline-article.timeline-hover').length == 0 ){
+				$(this).addClass('timeline-hover');
 			}else{
-				self.$element.find('.timeline-article.timeline-selected').removeClass('timeline-selected');
-				$(this).addClass('timeline-selected');
+				self.$element.find('.timeline-article.timeline-hover').removeClass('timeline-hover');
+				window.clearTimeout(tooltipTimeout);
+				tooltipTimeout = null;
+				$(this).addClass('timeline-hover');
 			}
-		});
-		
-		self.$element.find('.timeline-article-title').on('mouseover', function(){
-			var article_id = $(this).data('article-id');
-			
-			self.$element.find('.timeline-article-content[data-article-id="'+article_id+'"]').addClass('timeline-hover');
-		});
-		self.$element.find('.timeline-article-title').on('mouseleave', function(){
-			self.$element.find('.timeline-article-content.timeline-hover').removeClass('timeline-hover');
-		});
-		self.$element.find('.timeline-article-content').on('mouseleave', function(){
-			self.$element.find('.timeline-article-content.timeline-hover').removeClass('timeline-hover');
-		});
-		
-		$(document).on('click', function(event){
-			var timeline_any_selected	= (self.$element.find('.timeline-article.timeline-selected').length != 0)? true : false ;
-			var target_timeline_area	= (self.$element.find(event.target).length == 0)? true : false ;
-			
-			if( timeline_any_selected && target_timeline_area ){
-				self.$element.find('.timeline-article.timeline-selected').removeClass('timeline-selected')
+		}, function(){
+			if(!tooltipTimeout){
+				tooltipTimeout = window.setTimeout(function(){
+					tooltipTimeout = null;
+					self.$element.find('.timeline-article.timeline-hover').removeClass('timeline-hover');
+				}, 1000);
 			}
 		});
 	}

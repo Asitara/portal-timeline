@@ -18,13 +18,25 @@
  *	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+@timelineWrapColor: #273D81;
+@timelineMonthColor: #AAA;
+@timelineYearColor: #222;
+
+@timelineArticleNodeColor: #ccc;
+@timelineArticleNodeColorActive: #00ACff;
+@timelineArticleTooltipFontColor: #EFEFEF;
+@timelineArticleTooltipBackgroundColor: #222;
+@timelineArticleLinkHover: #FFF;
+@timelineArticleLinkVisited: @timelineArticleNodeColorActive;
+
+
 #pm_timeline { margin: 40px 10px 10px; }
 .timeline-wrap {
 	position: relative;
 	width: 100%;
 	height: 1px;
-	border: 1px solid #222;
-	background: #273D81;
+	border: 1px solid @timelineYearColor;
+	background: @timelineWrapColor;
 }
 
 .timeline-years {
@@ -32,7 +44,7 @@
 	left: 0;
 	top: -30px;
 	font: bold 10px/18px 'Lucida Grande', helvetica, tahoma, sans-serif;
-	color: #222;
+	color: @timelineYearColor;
 }
 .timeline-year {
 	position: absolute;
@@ -51,7 +63,7 @@
 	top: 20px;
 	width: 1px;
 	height: 9px;
-	background: #222;
+	background: @timelineYearColor;
 }
 
 .timeline-months {
@@ -59,7 +71,7 @@
 	left: 0;
 	top: -30px;
 	font: bold 10px/18px 'Lucida Grande', helvetica, tahoma, sans-serif;
-	color: #AAA;
+	color: @timelineMonthColor;
 }
 .timeline-month {
 	position: absolute;
@@ -78,7 +90,7 @@
 	top: 25px;
 	width: 1px;
 	height: 4px;
-	background: #AAA;
+	background: @timelineMonthColor;
 }
 
 .timeline-article {
@@ -93,8 +105,8 @@
 	border-radius: 8px; 
 	width: 11px; 
 	height: 11px; 
-	background: #ccc; 
-	border: 2px solid #222; 
+	background: @timelineArticleNodeColor; 
+	border: 2px solid @timelineYearColor; 
 	cursor: pointer;
 	-webkit-transition: width 0.05s ease-out, height 0.05s ease-out, margin 0.05s ease-out, background 0.05s ease-out;
 	-moz-transition: width 0.05s ease-out, height 0.05s ease-out, margin 0.05s ease-out, background 0.05s ease-out;
@@ -106,9 +118,9 @@
 	position: absolute;
 	left: 0px;
 	top: 15px;
-	background: #222;
+	background: @timelineArticleTooltipBackgroundColor;
 	font: 12px/18px 'Lucida Grande', helvetica, tahoma, sans-serif;
-	color: #EFEFEF;
+	color: @timelineArticleTooltipFontColor;
 	width: 375px;
 	z-index: 100;
 }
@@ -122,12 +134,12 @@
 	height: 0;
 	border-left: 6px solid transparent;
 	border-right: 6px solid transparent;
-	border-bottom: 6px solid #222;
+	border-bottom: 6px solid @timelineArticleTooltipBackgroundColor;
 }
 .timeline-article-content {
 	display: none;
 	min-height: 90px;
-	margin-top: -6px;
+	margin: -6px 0 3px;
 	padding: 0 12px 0 26px;
 }
 .timeline-article-title {
@@ -140,14 +152,14 @@
 .timeline-article-title:hover {
 	background: radial-gradient(
 		65% 35%,
-		rgba(0, 172, 255, 0.7) 0%,
+		fade(@timelineArticleNodeColorActive, 70) 0%,
 		transparent 100%
 	) transparent;
 }
 .timeline-article-title:first-child { padding-top: 12px; }
 .timeline-article-title ~ .timeline-article-title {margin-top: -12px;}
 .timeline-article-title span {
-	color: #00ACFF;
+	color: @timelineArticleNodeColorActive;
 	display: inline-block;
 	margin-right: 10px;
 	font-size: 10px;
@@ -168,22 +180,21 @@
 	text-align: right;
 }
 .timeline-article-link a:visited {
-	color: #00acff;
+	color: @timelineArticleLinkVisited;
 	text-decoration: none;
 }
 .timeline-article-link a:hover {
-	color: #fff;
+	color: @timelineArticleLinkHover;
 	text-decoration: underline;
 }
 
-.timeline-article.timeline-selected > .timeline-article-node {
+.timeline-article.timeline-hover > .timeline-article-node {
 	top: -9px;
 	left: -2px;
-	background: #00acff;
+	background: @timelineArticleNodeColorActive;
 }
-.timeline-article.timeline-selected > .timeline-article-tooltip,
-.timeline-article:hover > .timeline-article-tooltip { display: block; }
+.timeline-article.timeline-hover > .timeline-article-tooltip { display: block; }
 
 .timeline-article-content:hover,
-.timeline-article-content.timeline-hover { display: block; }
+.timeline-article-title:hover + .timeline-article-content { display: block; }
 
