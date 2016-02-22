@@ -43,6 +43,7 @@
 	position: absolute;
 	left: 0;
 	top: -30px;
+	width: 100%;
 	font: bold 10px/18px 'Lucida Grande', helvetica, tahoma, sans-serif;
 	color: @timelineYearColor;
 }
@@ -70,6 +71,7 @@
 	position: absolute;
 	left: 0;
 	top: -30px;
+	width: 100%;
 	font: bold 10px/18px 'Lucida Grande', helvetica, tahoma, sans-serif;
 	color: @timelineMonthColor;
 }

@@ -46,12 +46,6 @@
 		this._posArticles();
 		
 		this._tooltipHandler();
-		
-		window.setInterval(function(){
-			if(self.wrapWidth != self.$element.find('.timeline-wrap').width()){
-				self.init();
-			}
-		}, 3000);
 	}
 	
 	// Calc Position of Years
@@ -61,7 +55,7 @@
 		this.$element.find('.timeline-year').each(function( current_year ){
 			var year_left = self.gapYear * current_year;
 			
-			$(this).css('left', year_left + 'px');
+			$(this).css('left', year_left * 100 / self.wrapWidth + '%');
 		});
 	}
 	
@@ -73,7 +67,7 @@
 			var month_left = self.current_width + self.gapMonth;
 			if(current_month != 0 && !(current_month % 11)) month_left += self.gapMonth;
 			
-			$(this).css('left', month_left + 'px');
+			$(this).css('left', month_left * 100 / self.wrapWidth + '%');
 			
 			self.current_width = month_left;
 		});
@@ -93,7 +87,7 @@
 				article_left += (dateMonth - 1) * self.gapMonth;
 				article_left += (dateDay - 1) * self.gapDay;
 			
-			$(this).css('left', article_left + 'px');
+			$(this).css('left', article_left * 100 / self.wrapWidth + '%');
 		});
 	}
 	
