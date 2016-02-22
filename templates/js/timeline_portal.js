@@ -46,6 +46,12 @@
 		this._posArticles();
 		
 		this._tooltipHandler();
+		
+		window.setInterval(function(){
+			if(self.wrapWidth != self.$element.find('.timeline-wrap').width()){
+				self.init();
+			}
+		}, 3000);
 	}
 	
 	// Calc Position of Years
